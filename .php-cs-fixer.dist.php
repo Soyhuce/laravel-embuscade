@@ -4,8 +4,6 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()->in([
-    'config',
-    'database',
     'src',
     'tests',
 ]);
