@@ -2,9 +2,9 @@
 
 namespace Soyhuce\LaravelEmbuscade;
 
+use Soyhuce\LaravelEmbuscade\Commands\LaravelEmbuscadeCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Soyhuce\LaravelEmbuscade\Commands\LaravelEmbuscadeCommand;
 
 class LaravelEmbuscadeServiceProvider extends PackageServiceProvider
 {
