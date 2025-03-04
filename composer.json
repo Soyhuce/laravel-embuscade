@@ -1,45 +1,46 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "soyhuce/laravel-embuscade",
+    "description": "Test Laravel views in isolation, inspired by nunomaduro/laravel-mojito",
     "keywords": [
-        ":vendor_name",
-        "laravel",
-        ":package_slug"
+        "SoyHuCe",
+        "Laravel",
+        "tests",
+        "views"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/soyhuce/laravel-embuscade",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Bastien Philippe",
+            "email": "bastien.philippe@soyhuce.fr",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.4",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^10.0||^11.0||^12.0"
+        "illuminate/contracts": "^12.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.",
-        "nunomaduro/collision": "^8.1.1||^7.10.0",
+        "friendsofphp/php-cs-fixer": "^3.69.1",
+        "nunomaduro/collision": "^8.1.1",
         "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^10.0.0||^9.0.0||^8.22.0",
+        "orchestra/testbench": "^10.0.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-arch": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0",
-        "phpstan/extension-installer": "^1.3||^2.0",
-        "phpstan/phpstan-deprecation-rules": "^1.1||^2.0"
+        "phpstan/extension-installer": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Soyhuce\\LaravelEmbuscade\\": "src/",
+            "Soyhuce\\LaravelEmbuscade\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Soyhuce\\LaravelEmbuscade\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
@@ -66,11 +67,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "Soyhuce\\LaravelEmbuscade\\LaravelEmbuscadeServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",

@@ -1,5 +1,5 @@
 <?php declare(strict_types=1);
 
-// config for VendorName/Skeleton
+// config for Soyhuce/LaravelEmbuscade
 return [
 ];

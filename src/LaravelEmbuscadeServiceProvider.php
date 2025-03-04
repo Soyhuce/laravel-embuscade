@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace VendorName\Skeleton;
+namespace Soyhuce\LaravelEmbuscade;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use Soyhuce\LaravelEmbuscade\Commands\LaravelEmbuscadeCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class LaravelEmbuscadeServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('laravel-embuscade')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_laravel_embuscade_table')
+            ->hasCommand(LaravelEmbuscadeCommand::class);
     }
 }
