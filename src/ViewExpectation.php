@@ -283,7 +283,7 @@ class ViewExpectation
     /**
      * Asserts that the view text, at the **root element**, is the expected one.
      */
-    public function textToBe(string $text): self
+    public function toHaveText(string $text): self
     {
         $assertion = new IsIdentical($text);
         $message = "Failed asserting that `{$text}` is text of `{$this->html}`.";
@@ -302,7 +302,7 @@ class ViewExpectation
     /**
      * Asserts that the view text, at the **root element**, contains the expected one.
      */
-    public function textToContain(string $text): self
+    public function toContainText(string $text): self
     {
         $assertion = new StringContains($text);
         $message = "Failed asserting that `{$text}` is contained in text of `{$this->html}`.";
