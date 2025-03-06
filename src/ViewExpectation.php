@@ -42,9 +42,17 @@ class ViewExpectation
 
     /**
      * Creates a new view assertion with the given selector.
+     *
+     * @param callable(ViewExpectation): void|null $callback
      */
-    public function in(string $selector): self
+    public function in(string $selector, ?callable $callback = null ): self
     {
+        if($callback !== null) {
+            $callback($this->in($selector));
+
+            return $this;
+        }
+
         $selector = $this->format($selector);
 
         $this->toHave($selector);
@@ -59,9 +67,17 @@ class ViewExpectation
 
     /**
      * Creates a new view assertion with the given selector at the given position.
+     *
+     * @param callable(ViewExpectation): void|null $callback
      */
-    public function at(string $selector, int $position): self
+    public function at(string $selector, int $position, ?callable $callback = null): self
     {
+        if($callback !== null) {
+            $callback($this->at($selector, $position));
+
+            return $this;
+        }
+
         $selector = $this->format($selector);
 
         $node = $this->crawler->filter($selector)->eq($position);
@@ -71,9 +87,17 @@ class ViewExpectation
 
     /**
      * Creates a new view assertion with the given selector at the first position.
+     *
+     * @param callable(ViewExpectation): void|null $callback
      */
-    public function first(string $selector): self
+    public function first(string $selector, ?callable $callback = null): self
     {
+        if($callback !== null) {
+            $callback($this->first($selector));
+
+            return $this;
+        }
+
         $selector = $this->format($selector);
 
         $node = $this->crawler->filter($selector)->first();
@@ -83,9 +107,17 @@ class ViewExpectation
 
     /**
      * Creates a new view assertion with the given selector at the last position.
+     *
+     * @param callable(ViewExpectation): void|null $callback
      */
-    public function last(string $selector): self
+    public function last(string $selector,?callable $callback = null): self
     {
+        if($callback !== null) {
+            $callback($this->last($selector));
+
+            return $this;
+        }
+
         $selector = $this->format($selector);
 
         $node = $this->crawler->filter($selector)->last();
@@ -95,9 +127,17 @@ class ViewExpectation
 
     /**
      * Creates a new view assertion with the given unique selector.
+     *
+     * @param callable(ViewExpectation): void|null $callback
      */
-    public function sole(string $selector): self
+    public function sole(string $selector,?callable $callback = null): self
     {
+        if($callback !== null) {
+            $callback($this->sole($selector));
+
+            return $this;
+        }
+
         $selector = $this->format($selector);
 
         $this->toHave($selector, 1);
