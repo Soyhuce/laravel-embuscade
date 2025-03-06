@@ -2,7 +2,6 @@
 
 namespace Soyhuce\LaravelEmbuscade;
 
-use DOMElement;
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -10,8 +9,8 @@ use Illuminate\Support\Traits\Macroable;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use PHPUnit\Framework\Constraint\IsIdentical;
+use PHPUnit\Framework\Constraint\IsNull;
 use PHPUnit\Framework\Constraint\StringContains;
-use Soyhuce\LaravelEmbuscade\Exceptions\RootElementNotFound;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\DomCrawler\Test\Constraint\CrawlerSelectorCount;
 use Symfony\Component\DomCrawler\Test\Constraint\CrawlerSelectorExists;
@@ -45,9 +44,9 @@ class ViewExpectation
      *
      * @param callable(ViewExpectation): void|null $callback
      */
-    public function in(string $selector, ?callable $callback = null ): self
+    public function in(string $selector, ?callable $callback = null): self
     {
-        if($callback !== null) {
+        if ($callback !== null) {
             $callback($this->in($selector));
 
             return $this;
@@ -72,7 +71,7 @@ class ViewExpectation
      */
     public function at(string $selector, int $position, ?callable $callback = null): self
     {
-        if($callback !== null) {
+        if ($callback !== null) {
             $callback($this->at($selector, $position));
 
             return $this;
@@ -92,7 +91,7 @@ class ViewExpectation
      */
     public function first(string $selector, ?callable $callback = null): self
     {
-        if($callback !== null) {
+        if ($callback !== null) {
             $callback($this->first($selector));
 
             return $this;
@@ -110,9 +109,9 @@ class ViewExpectation
      *
      * @param callable(ViewExpectation): void|null $callback
      */
-    public function last(string $selector,?callable $callback = null): self
+    public function last(string $selector, ?callable $callback = null): self
     {
-        if($callback !== null) {
+        if ($callback !== null) {
             $callback($this->last($selector));
 
             return $this;
@@ -130,9 +129,9 @@ class ViewExpectation
      *
      * @param callable(ViewExpectation): void|null $callback
      */
-    public function sole(string $selector,?callable $callback = null): self
+    public function sole(string $selector, ?callable $callback = null): self
     {
-        if($callback !== null) {
+        if ($callback !== null) {
             $callback($this->sole($selector));
 
             return $this;
@@ -193,18 +192,25 @@ class ViewExpectation
     /**
      * Asserts that the view, at the **root element**, contains the given attribute value.
      */
-    public function toHaveAttribute(string $attribute, string $value): self
+    public function toHaveAttribute(string $attribute, ?string $value = null): self
     {
-        $assertion = new IsIdentical($value);
-        $message = "Failed asserting that the {$attribute} `{$value}` exists within `{$this->html}`.";
+        if ($value === null) {
+            $assertion = Assert::logicalNot(new IsNull());
+            $message = "Failed asserting that the {$attribute} exists within `{$this->html}`.";
+        } else {
+            $assertion = new IsIdentical($value);
+            $message = "Failed asserting that the {$attribute} `{$value}` exists within `{$this->html}`.";
+        }
 
         if ($this->negate) {
             $this->negate = false;
             $assertion = Assert::logicalNot($assertion);
-            $message = "Failed asserting that the {$attribute} `{$value}` does not exist within `{$this->html}`.";
+            $message = $value === null
+            ? "Failed asserting that the {$attribute} does not exist within `{$this->html}`."
+            : "Failed asserting that the {$attribute} `{$value}` does not exist within `{$this->html}`.";
         }
 
-        Assert::assertThat($this->getRootElement()->getAttribute($attribute), $assertion, $message);
+        Assert::assertThat($this->crawler->attr($attribute), $assertion, $message);
 
         return $this;
     }
@@ -223,7 +229,7 @@ class ViewExpectation
             $message = "Failed asserting that the {$attribute} does not contain `{$value}` within `{$this->html}`.";
         }
 
-        Assert::assertThat($this->getRootElement()->getAttribute($attribute), $assertion, $message);
+        Assert::assertThat($this->crawler->attr($attribute), $assertion, $message);
 
         return $this;
     }
@@ -343,23 +349,6 @@ class ViewExpectation
         }
 
         return Str::trim($selector);
-    }
-
-    /**
-     * Returns the node of the current root element.
-     */
-    protected function getRootElement(): DOMElement
-    {
-        $node = $this->crawler->getNode(0);
-
-        if ($node === null) {
-            throw new RootElementNotFound($this->crawler->outerHtml());
-        }
-        if (!$node instanceof DOMElement) {
-            throw new Exception('Root element is not an instance of DOMElement');
-        }
-
-        return $node;
     }
 
     public function __get(string $name): mixed
