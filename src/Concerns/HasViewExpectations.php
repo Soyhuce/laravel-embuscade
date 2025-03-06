@@ -3,7 +3,11 @@
 namespace Soyhuce\LaravelEmbuscade\Concerns;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Constraint\IsEmpty;
+use PHPUnit\Framework\Constraint\IsIdentical;
+use PHPUnit\Framework\Constraint\StringContains;
 use Soyhuce\LaravelEmbuscade\ViewExpectation;
 use Symfony\Component\DomCrawler\Test\Constraint\CrawlerSelectorCount;
 use Symfony\Component\DomCrawler\Test\Constraint\CrawlerSelectorExists;
@@ -61,5 +65,83 @@ trait HasViewExpectations
             ->implode('][');
 
         return $this->toHave("meta[{$properties}]");
+    }
+
+    /**
+     * Asserts that the current element text is the expected one.
+     */
+    public function toHaveText(string $text): ViewExpectation
+    {
+        $assertion = new IsIdentical($text);
+        $message = "Failed asserting that `{$text}` is text of `{$this->html}`.";
+
+        if ($this->negate) {
+            $this->negate = false;
+            $assertion = Assert::logicalNot($assertion);
+            $message = "Failed asserting that `{$text}` is not text of `{$this->html}`.";
+        }
+
+        Assert::assertThat($this->crawler->text(null, true), $assertion, $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the current element contains the expected one.
+     */
+    public function toContainText(string $text): ViewExpectation
+    {
+        $assertion = new StringContains($text);
+        $message = "Failed asserting that `{$text}` is contained in text of `{$this->html}`.";
+
+        if ($this->negate) {
+            $this->negate = false;
+            $assertion = Assert::logicalNot($assertion);
+            $message = "Failed asserting that `{$text}` is not contained in text of `{$this->html}`.";
+        }
+
+        Assert::assertThat($this->crawler->text(null, true), $assertion, $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the current element has no text content.
+     */
+    public function toBeEmpty(): ViewExpectation
+    {
+        $content = $this->crawler->text(null, true);
+
+        $assertion = new IsEmpty();
+        $message = "Failed asserting that the text `{$content}` is empty.";
+
+        if ($this->negate) {
+            $this->negate = false;
+            $assertion = Assert::logicalNot($assertion);
+            $message = "Failed asserting that the text `{$content}` is not empty.";
+        }
+
+        Assert::assertThat($content, $assertion, $message);
+
+        return $this;
+    }
+
+    /**
+     * Asserts that the current element contains the given content.
+     */
+    public function toContain(string $content): ViewExpectation
+    {
+        $assertion = new StringContains($content);
+        $message = "Failed asserting that `{$content}` exists within `{$this->html}`.";
+
+        if ($this->negate) {
+            $this->negate = false;
+            $assertion = Assert::logicalNot($assertion);
+            $message = "Failed asserting that `{$content}` does not exists within `{$this->html}`.";
+        }
+
+        Assert::assertThat($this->html, $assertion, $message);
+
+        return $this;
     }
 }

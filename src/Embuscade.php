@@ -6,7 +6,7 @@ class Embuscade
 {
     public static string $selectorHtmlAttribute = 'data-embuscade';
 
-    public static function seletocHtmlAttribute(string $selectorHtmlAttribute): void
+    public static function selectorHtmlAttribute(string $selectorHtmlAttribute): void
     {
         self::$selectorHtmlAttribute = $selectorHtmlAttribute;
     }

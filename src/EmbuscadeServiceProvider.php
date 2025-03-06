@@ -2,7 +2,7 @@
 
 namespace Soyhuce\LaravelEmbuscade;
 
-use Illuminate\Support\Facades\Blade;
+use Illuminate\Testing\TestComponent;
 use Illuminate\Testing\TestResponse;
 use Illuminate\Testing\TestView;
 use Livewire\Features\SupportTesting\Testable;
@@ -30,6 +30,10 @@ class EmbuscadeServiceProvider extends PackageServiceProvider
         });
 
         TestView::macro('expectView', function (): ViewExpectation {
+            return new ViewExpectation($this->rendered);
+        });
+
+        TestComponent::macro('expectView', function (): ViewExpectation {
             return new ViewExpectation($this->rendered);
         });
 
