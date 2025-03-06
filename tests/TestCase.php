@@ -4,7 +4,7 @@ namespace Soyhuce\LaravelEmbuscade\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Soyhuce\LaravelEmbuscade\LaravelEmbuscadeServiceProvider;
+use Soyhuce\LaravelEmbuscade\EmbuscadeServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -20,7 +20,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            LaravelEmbuscadeServiceProvider::class,
+            EmbuscadeServiceProvider::class,
         ];
     }
 
