@@ -1,4 +1,6 @@
-# Test Laravel views in isolation, inspired by nunomaduro/laravel-mojito
+# Test Laravel views in isolation
+
+Inspired by [nunomaduro/laravel-mojito](https://github.com/nunomaduro/laravel-mojito)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/soyhuce/laravel-embuscade.svg?style=flat-square)](https://packagist.org/packages/soyhuce/laravel-embuscade)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/soyhuce/laravel-embuscade/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/soyhuce/laravel-embuscade/actions?query=workflow%3Arun-tests+branch%3Amain)
@@ -205,6 +207,39 @@ $this->view('test')
 ```
 
 Every selection method will allow you to pass a closure that will receive a new ViewExpectation, focused on the selected element.
+
+### Customization
+
+The `ViewExpectation` class is macroable, so you can add your own expectations:
+```php
+ViewExpectation::macro('toHaveCharset', function (string $charset) {
+        return $this->in('head')->first('meta')->toHaveAttribute('charset', $charset);
+    });
+});
+
+$this->view('home')->expectView()->toHaveCharset('utf-8');
+```
+
+### Debugging
+
+You can dump the current state of the ViewExpectation using the `dump` or `dd` methods:
+```php
+$this->view('home')->expectView()->in('a')->dump();
+```
+It will dump the current HTML node.
+
+## WTF is Embuscade ?
+
+Embuscade is a French word meaning ambush. It makes reference to the original package name, Laravel Mojito, as "une embuscade" is also a famous local cocktail from [Caen](https://fr.wikipedia.org/wiki/Caen).
+
+Each bar has its own recipe, but it could be something like:
+- 20 cl of blond beer
+- 12 cl of white wine
+- 8 cl of calvados (cider brandy, 40% alcohol)
+- 4 cl of blackcurrant syrup
+- 4 cl of lemon syrup
+
+Easy to drink but quite strong, be careful not to fall into the ambush!
 
 ## Testing
 
