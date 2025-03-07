@@ -2,9 +2,7 @@
 
 namespace Soyhuce\LaravelEmbuscade\Concerns;
 
-use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\Constraint\IsEmpty;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use PHPUnit\Framework\Constraint\IsNull;
 use PHPUnit\Framework\Constraint\StringContains;

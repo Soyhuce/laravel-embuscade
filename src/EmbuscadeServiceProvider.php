@@ -62,7 +62,7 @@ class EmbuscadeServiceProvider extends PackageServiceProvider
                 function (string $input) {
                     return preg_replace(
                         '/@embuscade\\(\'([^)]+)\'\\)/x',
-                        Embuscade::$selectorHtmlAttribute . "=\"\$1\"",
+                        Embuscade::$selectorHtmlAttribute . '="$1"',
                         $input
                     );
                 }
@@ -77,7 +77,5 @@ class EmbuscadeServiceProvider extends PackageServiceProvider
                 )
             );
         }
-
-
     }
 }
