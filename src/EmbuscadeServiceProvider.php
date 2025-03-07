@@ -23,7 +23,7 @@ class EmbuscadeServiceProvider extends PackageServiceProvider
     {
         TestResponse::macro('expectView', function (): ViewExpectation {
             if ($this->responseHasView()) {
-                return $this->original->expectView();
+                return new ViewExpectation($this->original->render());
             }
 
             return new ViewExpectation($this->original);
@@ -58,18 +58,26 @@ class EmbuscadeServiceProvider extends PackageServiceProvider
             /*        "<?php echo {$expression}; ?>" */
             //        ."\"";
             // });
-            $replace = fn (array $matches) => Embuscade::$selectorHtmlAttribute . "=\"{$matches[1]}\"";
+            app('blade.compiler')->prepareStringsForCompilationUsing(
+                function (string $input) {
+                    return preg_replace(
+                        '/@embuscade\\(\'([^)]+)\'\\)/x',
+                        Embuscade::$selectorHtmlAttribute . "=\"\$1\"",
+                        $input
+                    );
+                }
+            );
         } else {
             // Blade::directive('embuscade', fn (string $expression) => "");
-            $replace = fn (array $matches) => '';
+            app('blade.compiler')->prepareStringsForCompilationUsing(
+                fn (string $input) => preg_replace(
+                    '/@embuscade\\(\'([^)]+)\'\\)/x',
+                    '',
+                    $input
+                )
+            );
         }
 
-        app('blade.compiler')->prepareStringsForCompilationUsing(
-            fn (string $input) => preg_replace_callback(
-                '/@embuscade\\(\'([^)]+)\'\\)/x',
-                $replace,
-                $input
-            )
-        );
+
     }
 }
