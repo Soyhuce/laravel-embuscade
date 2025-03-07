@@ -34,45 +34,45 @@ composer require --dev soyhuce/laravel-embuscade
 
 ### Accessing view expectations
 
-The most basic way to access the ViewExpectation is to create it with an HTML string :
+The most basic way to access the ViewExpect is to create it with an HTML string :
 
 ```php
-use Soyhuce\LaravelEmbuscade\ViewExpectation;
+use Soyhuce\LaravelEmbuscade\ViewExpect;
 
-new ViewExpectation($html);
+new ViewExpect($html);
 ```
 
-As this is not the most convenient way, you can create the View expectation from various objects: 
+As this is not the most convenient way, you can create the ViewExpect from various objects: 
 ```php
 // From a TestResponse 
-$viewExpectation = $this->get('/')->expectView(); 
+$expect = $this->get('/')->expectView(); 
 
 // From a TestView
-$viewExpectation = $this->view('home', ['links' => $links])->expectView();
+$expect = $this->view('home', ['links' => $links])->expectView();
 
 // From a TestComponent
-$viewExpectation = $this->component(Home::class, ['links' => $links])->expectView();
+$expect = $this->component(Home::class, ['links' => $links])->expectView();
 ```
 
-If you use Livewire, you can also create a ViewExpectation from a Livewire test component:
+If you use Livewire, you can also create a ViewExpect from a Livewire test component:
 ```php
-$viewExpectation = Livewire::test(HomePage::class, ['links' => $links])->expectView();
+$expect = Livewire::test(HomePage::class, ['links' => $links])->expectView();
 ```
 
 ### Navigating the view
 
-Once the ViewExpectation is created, you can navigate the view using the following methods:
+Once the ViewExpect is created, you can navigate the view using the following methods:
 ```php
  // Selects all elements matching the CSS selector
-$viewExpectation->in($cssSeclector);
+$expect->in($cssSeclector);
  // Selects the nth element matching the CSS selector, index starts at 0 !
-$viewExpectation->at($cssSelector, $index);
+$expect->at($cssSelector, $index);
  // Selects the first element matching the CSS selector
-$viewExpectation->first($cssSelector);
+$expect->first($cssSelector);
  // Selects the last element matching the CSS selector
-$viewExpectation->last($cssSeclector);
+$expect->last($cssSeclector);
  // Selects the only element matching the CSS selector
-$viewExpectation->sole($cssSelector);
+$expect->sole($cssSelector);
 ```
 
 `$cssSelector` must be any valid CSS selector, like `.class`, `#id`, `tag`, `tag.class`, `tag#id`, `tag[attr=value]`, etc.
@@ -87,7 +87,7 @@ You can also use Embuscade selectors to navigate the view as navigating CSS sele
 ```
 
 ```php
-$viewExpectation->sole('@login-button')
+$expect->sole('@login-button')
     ->...
 ```
 
@@ -122,21 +122,21 @@ Embuscade::selectorHtmlAttribute('data-test'); // or 'dusk' if you use Dusk and 
 Some expectations will be applied to the entire view:
 ```php
 // Expects the view to contain at least an element matching the CSS selector
-$viewExpectation->toHave('.links a');
+$expect->toHave('.links a');
 // Expects the view to contain exactly n elements matching the CSS selector
-$viewExpectation->toHave('.links a', 2);
+$expect->toHave('.links a', 2);
 // Expects the view to contain at least one a element pointing to $link
-$viewExpectation->toHaveLink('https://laravel.com/docs');
+$expect->toHaveLink('https://laravel.com/docs');
 // Expect the view contains a meta tag with the given attributes in head section
-$viewExpectation->toHaveMeta(['property' => 'og:title', 'content' => 'Laravel']);
+$expect->toHaveMeta(['property' => 'og:title', 'content' => 'Laravel']);
 // Expect the view text equals given text
-$viewExpectation->toHaveText('Laravel');
+$expect->toHaveText('Laravel');
 // Expect the view text contains given text
-$viewExpectation->toContainText('Documentation');
+$expect->toContainText('Documentation');
 // Expect the view text is empty
-$viewExpectation->toBeEmpty();
+$expect->toBeEmpty();
 // Expect the view html contains given content
-$viewExpectation->toContain('<a href="https://laravel.com/docs">Documentation</a>');
+$expect->toContain('<a href="https://laravel.com/docs">Documentation</a>');
 ```
 
 #### Expectations on current element
@@ -144,23 +144,23 @@ $viewExpectation->toContain('<a href="https://laravel.com/docs">Documentation</a
 Other expectation will only look at current root:
 ```php
 // Expect the element to have the given attribute
-$viewExpectation->toHaveAttribute('disabled');
+$expect->toHaveAttribute('disabled');
 // Expect the element to have the given attribute with the given value
-$viewExpectation->toHaveAttribute('href', 'https://laravel.com/docs');
+$expect->toHaveAttribute('href', 'https://laravel.com/docs');
 // Expect the element to have the given attribute containing the given value
-$viewExpectation->toHaveAttributeContaining('class', 'btn');
+$expect->toHaveAttributeContaining('class', 'btn');
 // Expect the element to have the given class
-$viewExpectation->toHaveClass('btn');
+$expect->toHaveClass('btn');
 // Expect the element to be disabled
-$viewExpectation->toBeDisabled();
+$expect->toBeDisabled();
 ```
 
 #### Negating expectation
 
 You can negate any expectation by calling `not` before the expectation:
 ```php
-$viewExpectation->not->toHave('.links a');
-$viewExpectation->not->toBeDisabled();
+$expect->not->toHave('.links a');
+$expect->not->toBeDisabled();
 ```
 
 The negation will only apply to the next expectation.
@@ -196,23 +196,23 @@ Given the following HTML:
 you can test it with the following code:
 
 ```php
-use Soyhuce\LaravelEmbuscade\ViewExpectation;
+use Soyhuce\LaravelEmbuscade\ViewExpect;
 
 $this->view('test')
     ->expectView()
     ->toBeDisabled()
-    ->sole('legend', fn(ViewExpectation $expect) => $expect->toHaveText('Disabled fieldset'))
-    ->at('p input', 0, fn(ViewExpectation $expect) => $expect->toHaveAttribute('type', 'radio'))
-    ->at('p input', 1, fn(ViewExpectation $expect) => $expect->toHaveAttribute('type', 'number'));
+    ->sole('legend', fn(ViewExpect $expect) => $expect->toHaveText('Disabled fieldset'))
+    ->at('p input', 0, fn(ViewExpect $expect) => $expect->toHaveAttribute('type', 'radio'))
+    ->at('p input', 1, fn(ViewExpect $expect) => $expect->toHaveAttribute('type', 'number'));
 ```
 
-Every selection method will allow you to pass a closure that will receive a new ViewExpectation, focused on the selected element.
+Every selection method will allow you to pass a closure that will receive a new ViewExpect, focused on the selected element.
 
 ### Customization
 
-The `ViewExpectation` class is macroable, so you can add your own expectations:
+The `ViewExpect` class is macroable, so you can add your own expectations:
 ```php
-ViewExpectation::macro('toHaveCharset', function (string $charset) {
+ViewExpect::macro('toHaveCharset', function (string $charset) {
         return $this->in('head')->first('meta')->toHaveAttribute('charset', $charset);
     });
 });
@@ -222,7 +222,7 @@ $this->view('home')->expectView()->toHaveCharset('utf-8');
 
 ### Debugging
 
-You can dump the current state of the ViewExpectation using the `dump` or `dd` methods:
+You can dump the current state of the ViewExpect using the `dump` or `dd` methods:
 ```php
 $this->view('home')->expectView()->in('a')->dump();
 ```

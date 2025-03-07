@@ -7,7 +7,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use PHPUnit\Framework\Constraint\StringContains;
-use Soyhuce\LaravelEmbuscade\ViewExpectation;
+use Soyhuce\LaravelEmbuscade\ViewExpect;
 use Symfony\Component\DomCrawler\Test\Constraint\CrawlerSelectorCount;
 use Symfony\Component\DomCrawler\Test\Constraint\CrawlerSelectorExists;
 use function sprintf;
@@ -17,7 +17,7 @@ trait HasViewExpectations
     /**
      * Asserts that the view contains the given selector.
      */
-    public function toHave(string $selector, ?int $count = null): ViewExpectation
+    public function toHave(string $selector, ?int $count = null): ViewExpect
     {
         $selector = $this->format($selector);
 
@@ -45,7 +45,7 @@ trait HasViewExpectations
     /**
      * Asserts that the view contains an element with the given link.
      */
-    public function toHaveLink(string $link): ViewExpectation
+    public function toHaveLink(string $link): ViewExpect
     {
         return $this->toHave("a[href='{$link}']");
     }
@@ -55,7 +55,7 @@ trait HasViewExpectations
      *
      * @param array<string, string> $attributes
      */
-    public function toHaveMeta(array $attributes): ViewExpectation
+    public function toHaveMeta(array $attributes): ViewExpect
     {
         $this->toHave('head');
 
@@ -69,7 +69,7 @@ trait HasViewExpectations
     /**
      * Asserts that the current element text is the expected one.
      */
-    public function toHaveText(string $text): ViewExpectation
+    public function toHaveText(string $text): ViewExpect
     {
         $assertion = new IsIdentical($text);
         $message = "Failed asserting that `{$text}` is text of `{$this->html}`.";
@@ -88,7 +88,7 @@ trait HasViewExpectations
     /**
      * Asserts that the current element contains the expected one.
      */
-    public function toContainText(string $text): ViewExpectation
+    public function toContainText(string $text): ViewExpect
     {
         $assertion = new StringContains($text);
         $message = "Failed asserting that `{$text}` is contained in text of `{$this->html}`.";
@@ -107,7 +107,7 @@ trait HasViewExpectations
     /**
      * Asserts that the current element has no text content.
      */
-    public function toBeEmpty(): ViewExpectation
+    public function toBeEmpty(): ViewExpect
     {
         $content = $this->crawler->text(null, true);
 
@@ -128,7 +128,7 @@ trait HasViewExpectations
     /**
      * Asserts that the current element contains the given content.
      */
-    public function toContain(string $content): ViewExpectation
+    public function toContain(string $content): ViewExpect
     {
         $assertion = new StringContains($content);
         $message = "Failed asserting that `{$content}` exists within `{$this->html}`.";

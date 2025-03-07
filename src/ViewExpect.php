@@ -11,9 +11,9 @@ use Soyhuce\LaravelEmbuscade\Concerns\SelectsElements;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
- * @property-read ViewExpectation $not
+ * @property-read ViewExpect $not
  */
-class ViewExpectation
+class ViewExpect
 {
     use FormatsSelectors;
     use HasNodeExpectations;

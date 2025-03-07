@@ -3,10 +3,10 @@
 namespace Soyhuce\LaravelEmbuscade\Tests;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Soyhuce\LaravelEmbuscade\ViewExpectation;
+use Soyhuce\LaravelEmbuscade\ViewExpect;
 
 beforeEach(function (): void {
-    ViewExpectation::macro('toHaveCharset', function (string $charset) {
+    ViewExpect::macro('toHaveCharset', function (string $charset) {
         return $this->in('head')->first('meta')->toHaveAttribute('charset', $charset);
     });
 });

@@ -21,25 +21,25 @@ class EmbuscadeServiceProvider extends PackageServiceProvider
     #[Override]
     public function packageRegistered(): void
     {
-        TestResponse::macro('expectView', function (): ViewExpectation {
+        TestResponse::macro('expectView', function (): ViewExpect {
             if ($this->responseHasView()) {
-                return new ViewExpectation($this->original->render());
+                return new ViewExpect($this->original->render());
             }
 
-            return new ViewExpectation($this->original);
+            return new ViewExpect($this->original);
         });
 
-        TestView::macro('expectView', function (): ViewExpectation {
-            return new ViewExpectation($this->rendered);
+        TestView::macro('expectView', function (): ViewExpect {
+            return new ViewExpect($this->rendered);
         });
 
-        TestComponent::macro('expectView', function (): ViewExpectation {
-            return new ViewExpectation($this->rendered);
+        TestComponent::macro('expectView', function (): ViewExpect {
+            return new ViewExpect($this->rendered);
         });
 
         if (class_exists(Testable::class)) {
-            Testable::macro('expectView', function (): ViewExpectation {
-                return new ViewExpectation($this->html(false));
+            Testable::macro('expectView', function (): ViewExpect {
+                return new ViewExpect($this->html(false));
             });
         }
     }

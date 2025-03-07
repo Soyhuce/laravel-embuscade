@@ -6,7 +6,7 @@ use Illuminate\Encryption\Encrypter;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Soyhuce\LaravelEmbuscade\EmbuscadeServiceProvider;
-use Soyhuce\LaravelEmbuscade\ViewExpectation;
+use Soyhuce\LaravelEmbuscade\ViewExpect;
 
 class TestCase extends Orchestra
 {
@@ -24,9 +24,9 @@ class TestCase extends Orchestra
         config()->set('app.key', 'base64:' . base64_encode(Encrypter::generateKey($app['config']['app.cipher'])));
     }
 
-    public function expectView(string $name): ViewExpectation
+    public function expectView(string $name): ViewExpect
     {
-        return new ViewExpectation((string) file_get_contents(
+        return new ViewExpect((string) file_get_contents(
             __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $name . '.html'
         ));
     }

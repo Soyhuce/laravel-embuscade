@@ -6,14 +6,14 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use PHPUnit\Framework\Constraint\IsNull;
 use PHPUnit\Framework\Constraint\StringContains;
-use Soyhuce\LaravelEmbuscade\ViewExpectation;
+use Soyhuce\LaravelEmbuscade\ViewExpect;
 
 trait HasNodeExpectations
 {
     /**
      * Asserts that the current element contains the given attribute value.
      */
-    public function toHaveAttribute(string $attribute, ?string $value = null): ViewExpectation
+    public function toHaveAttribute(string $attribute, ?string $value = null): ViewExpect
     {
         if ($value === null) {
             $assertion = Assert::logicalNot(new IsNull());
@@ -39,7 +39,7 @@ trait HasNodeExpectations
     /**
      * Asserts that the current element contains the given attribute value.
      */
-    public function toHaveAttributeContaining(string $attribute, string $value): ViewExpectation
+    public function toHaveAttributeContaining(string $attribute, string $value): ViewExpect
     {
         $assertion = new StringContains($value);
         $message = "Failed asserting that the {$attribute} contains `{$value}` within `{$this->html}`.";
@@ -58,7 +58,7 @@ trait HasNodeExpectations
     /**
      * Asserts that the current element contains the given class.
      */
-    public function toHaveClass(string $class): ViewExpectation
+    public function toHaveClass(string $class): ViewExpect
     {
         return $this->toHaveAttributeContaining('class', $class);
     }
@@ -66,7 +66,7 @@ trait HasNodeExpectations
     /**
      * Asserts that the current element has a disabled attribute.
      */
-    public function toBeDisabled(): ViewExpectation
+    public function toBeDisabled(): ViewExpect
     {
         return $this->toHaveAttribute('disabled');
     }
