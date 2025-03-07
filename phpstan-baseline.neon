@@ -1,14 +1,14 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Access to protected property Illuminate\\Testing\\TestView\:\:\$rendered\.$#'
+			message: '#^Access to protected property Illuminate\\Testing\\TestComponent\:\:\$rendered\.$#'
 			identifier: property.protected
 			count: 1
 			path: src/EmbuscadeServiceProvider.php
 
 		-
-			message: '#^Call to an undefined method Soyhuce\\LaravelEmbuscade\\EmbuscadeServiceProvider\:\:html\(\)\.$#'
-			identifier: method.notFound
+			message: '#^Access to protected property Illuminate\\Testing\\TestView\:\:\$rendered\.$#'
+			identifier: property.protected
 			count: 1
 			path: src/EmbuscadeServiceProvider.php
 

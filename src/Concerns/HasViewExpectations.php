@@ -3,7 +3,6 @@
 namespace Soyhuce\LaravelEmbuscade\Concerns;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Constraint\IsEmpty;
 use PHPUnit\Framework\Constraint\IsIdentical;
@@ -137,7 +136,7 @@ trait HasViewExpectations
         if ($this->negate) {
             $this->negate = false;
             $assertion = Assert::logicalNot($assertion);
-            $message = "Failed asserting that `{$content}` does not exists within `{$this->html}`.";
+            $message = "Failed asserting that `{$content}` does not exist within `{$this->html}`.";
         }
 
         Assert::assertThat($this->html, $assertion, $message);

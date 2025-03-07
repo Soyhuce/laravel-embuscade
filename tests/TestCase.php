@@ -2,36 +2,32 @@
 
 namespace Soyhuce\LaravelEmbuscade\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Encryption\Encrypter;
+use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Soyhuce\LaravelEmbuscade\EmbuscadeServiceProvider;
+use Soyhuce\LaravelEmbuscade\ViewExpectation;
 
 class TestCase extends Orchestra
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Soyhuce\\LaravelEmbuscade\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
-    }
-
     protected function getPackageProviders($app)
     {
         return [
             EmbuscadeServiceProvider::class,
+            LivewireServiceProvider::class,
         ];
     }
 
     public function getEnvironmentSetUp($app): void
     {
         config()->set('database.default', 'testing');
+        config()->set('app.key', 'base64:' . base64_encode(Encrypter::generateKey($app['config']['app.cipher'])));
+    }
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+    public function expectView(string $name): ViewExpectation
+    {
+        return new ViewExpectation((string) file_get_contents(
+            __DIR__ . DIRECTORY_SEPARATOR . 'fixtures' . DIRECTORY_SEPARATOR . $name . '.html'
+        ));
     }
 }
