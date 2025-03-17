@@ -115,6 +115,23 @@ use Soyhuce\LaravelEmbuscade\Embuscade;
 Embuscade::selectorHtmlAttribute('data-test'); // or 'dusk' if you use Dusk and want to leverage existing Dusk selectors.
 ```
 
+#### In production
+
+If you run in production without dev-dependencies installed, you will need an extra setup in order to remove `@embuscade` directives from your views.
+
+In your `AppServiceProvider::boot` method, you can add the following code:
+```php
+if (!class_exists(EmbuscadeServiceProvider::class)) {
+    $this->app->get('blade.compiler')->prepareStringsForCompilationUsing(
+        fn (string $input) => preg_replace( '/@embuscade\\(\'([^)]+)\'\\)/x', '', $input)
+    );
+}
+```
+
+There won't be any overhead here as cached views won't contain any `@embuscade` directive.
+
+> Note : if you run in production with your dev-dependencies installed, you should definitively consider removing them.
+
 ### Expectations
 
 #### Expectations on entire view
