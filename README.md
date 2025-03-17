@@ -125,7 +125,7 @@ Some expectations will be applied to the entire view:
 $expect->toHave('.links a');
 // Expects the view to contain exactly n elements matching the CSS selector
 $expect->toHave('.links a', 2);
-// Expects the view to contain at least one a element pointing to $link
+// Expects the view to contain at least one element pointing to $link
 $expect->toHaveLink('https://laravel.com/docs');
 // Expect the view contains a meta tag with the given attributes in head section
 $expect->toHaveMeta(['property' => 'og:title', 'content' => 'Laravel']);
