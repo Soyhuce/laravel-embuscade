@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-embuscade` will be documented in this file.
 
+## 1.1.1 - 2025-03-17
+
+### What's Changed
+
+* Add more node expectations by @bastien-phi in https://github.com/Soyhuce/laravel-embuscade/pull/2
+* Add doc for production by @bastien-phi in https://github.com/Soyhuce/laravel-embuscade/pull/3
+
+**Full Changelog**: https://github.com/Soyhuce/laravel-embuscade/compare/1.1.0...1.1.1
+
 ## 1.1.0 - 2025-03-07
 
 ### What's Changed
