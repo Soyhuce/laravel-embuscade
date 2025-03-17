@@ -149,10 +149,17 @@ $expect->toHaveAttribute('disabled');
 $expect->toHaveAttribute('href', 'https://laravel.com/docs');
 // Expect the element to have the given attribute containing the given value
 $expect->toHaveAttributeContaining('class', 'btn');
-// Expect the element to have the given class
-$expect->toHaveClass('btn');
-// Expect the element to be disabled
-$expect->toBeDisabled();
+```
+
+Some helpers are also available for you: 
+```php
+$expect->toAccept($value); // same as toHaveAttribute('accept', $value)
+$expect->toBeDisabled(); // same as toHaveAttribute('disabled')
+$expect->toHaveAlt($value); // same as toHaveAttribute('alt', $value)
+$expect->toHaveClass($value); // same as toHaveAttributeContaining('class', $value)
+$expect->toHaveHref($value); // same as toHaveAttribute('href', $value)
+$expect->toHaveSrc($value); // same as toHaveAttribute('src', $value)
+$expect->toHaveValue($value); // same as toHaveAttribute('value', $value)
 ```
 
 #### Negating expectation
