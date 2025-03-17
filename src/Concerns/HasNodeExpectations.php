@@ -64,10 +64,50 @@ trait HasNodeExpectations
     }
 
     /**
+     * Asserts that the current element has expected accept attribute.
+     */
+    public function toAccept(string $accept): ViewExpect
+    {
+        return $this->toHaveAttribute('accept', $accept);
+    }
+
+    /**
      * Asserts that the current element has a disabled attribute.
      */
     public function toBeDisabled(): ViewExpect
     {
         return $this->toHaveAttribute('disabled');
+    }
+
+    /**
+     * Asserts that the current element has expected alt attribute.
+     */
+    public function toHaveAlt(string $alt): ViewExpect
+    {
+        return $this->toHaveAttribute('alt', $alt);
+    }
+
+    /**
+     * Asserts that the current element has expected href attribute.
+     */
+    public function toHaveHref(string $href): ViewExpect
+    {
+        return $this->toHaveAttribute('href', $href);
+    }
+
+    /**
+     * Asserts that the current element has expected src attribute.
+     */
+    public function toHaveSrc(string $src): ViewExpect
+    {
+        return $this->toHaveAttribute('src', $src);
+    }
+
+    /**
+     * Asserts that the current element has expected value attribute.
+     */
+    public function toHaveValue(string $value): ViewExpect
+    {
+        return $this->toHaveAttribute('value', $value);
     }
 }
